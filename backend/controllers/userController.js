@@ -1,8 +1,22 @@
-const express = require('express')
-const router = express.Router()
-const { registerUser, loginUser } = require('../controllers/userController')
+const asyncHandler = require('express-async-handler')
 
-router.post('/', registerUser)
-router.post('/login', loginUser)
+const registerUser = asyncHandler(async (req, res) => {
+    const {name, email, password} = req.body
 
-module.exports = router
+    // Validation
+    if (!name || !email || !password) {
+        return res.status(400)
+        throw new Error('Please include all fields')
+    }
+
+    res.send('Register Route')
+})
+
+const loginUser = asyncHandler(async (req, res) => {
+    res.send('Login Router')
+})
+
+module.exports = {
+    registerUser,
+    loginUser
+}
